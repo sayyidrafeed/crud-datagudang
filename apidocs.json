@@ -1,0 +1,291 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Tugas 1",
+    "description": "Dokumentasi API tugas 1 Backend Basic",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/barang": {
+      "get": {
+        "summary": "Mendapatkan semua barang",
+        "description": "Mengambil seluruh daftar barang yang saat ini ada di dalam kotak barang hilang.",
+        "tags": [
+          "Barang"
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan daftar barang.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Barang"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Menambahkan barang baru",
+        "description": "Membuat entri barang baru di dalam sistem. ID akan dibuat secara otomatis.",
+        "tags": [
+          "Barang"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BarangInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Barang berhasil dibuat.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Barang"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/barang/{id}": {
+      "get": {
+        "summary": "Mendapatkan satu barang berdasarkan ID",
+        "description": "Mengambil detail dari satu barang spesifik menggunakan ID uniknya.",
+        "tags": [
+          "Barang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID unik dari barang yang ingin dicari.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan data barang.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Barang"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Barang tidak ditemukan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Memperbarui barang yang ada",
+        "description": "Memperbarui satu atau lebih properti dari barang yang sudah ada berdasarkan ID-nya.",
+        "tags": [
+          "Barang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID unik dari barang yang ingin diperbarui.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama": {
+                    "type": "string"
+                  },
+                  "ditemukanOleh": {
+                    "type": "string"
+                  },
+                  "isMagical": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "diambilOleh": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Barang berhasil diperbarui.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Barang"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Barang tidak ditemukan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus barang berdasarkan ID",
+        "description": "Menghapus permanen satu barang dari sistem berdasarkan ID uniknya.",
+        "tags": [
+          "Barang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID unik dari barang yang ingin dihapus.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Barang berhasil dihapus.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Barang \"Kipas Nganu\" berhasil dihapus."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Barang tidak ditemukan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Barang": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID unik untuk setiap barang.",
+            "example": 1
+          },
+          "nama": {
+            "type": "string",
+            "description": "Nama dari barang yang hilang.",
+            "example": "Sepatu Terbang"
+          },
+          "ditemukanOleh": {
+            "type": "string",
+            "description": "Nama orang yang menemukan barang.",
+            "example": "Harry"
+          },
+          "isMagical": {
+            "type": "boolean",
+            "description": "Menandakan apakah barang tersebut ajaib atau tidak.",
+            "example": true
+          },
+          "status": {
+            "type": "string",
+            "description": "Status pengambilan barang.",
+            "example": "Belum Diambil"
+          },
+          "diambilOleh": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nama orang yang sudah mengambil barang (null jika belum).",
+            "example": null
+          }
+        }
+      },
+      "BarangInput": {
+        "type": "object",
+        "description": "Skema untuk membuat barang baru (tanpa id, status, dll.)",
+        "properties": {
+          "nama": {
+            "type": "string",
+            "example": "Jubah Gaib"
+          },
+          "ditemukanOleh": {
+            "type": "string",
+            "example": "Dumbledore"
+          },
+          "isMagical": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Pesan error yang deskriptif.",
+            "example": "Barang dengan ID 99 tidak ditemukan."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+###
+GET http://localhost:3000/barang
+Accept: application/json
+
+###
+GET http://localhost:3000/barang/1
+Accept: application/json
+
+###
+GET http://localhost:3000/barang/99
+Accept: application/json
+
+###
+POST http://localhost:3000/barang
+Content-Type: application/json
+
+{
+  "nama": "Jubah bolong",
+  "ditemukanOleh": "Koko Robert",
+  "isMagical": true
+}
+
+###
+PUT http://localhost:3000/barang/3
+Content-Type: application/json
+
+{
+  "status": "Sudah Diambil",
+  "diambilOleh": "Mbut Sendiri"
+}
+
+###
+PUT http://localhost:3000/barang/99
+Content-Type: application/json
+
+{
+  "status": "Hilang di parkiran UPN"
+}
+
+###
+DELETE http://localhost:3000/barang/4
+Accept: application/json
+
+###
+DELETE http://localhost:3000/barang/99
+Accept: application/json
